@@ -13,12 +13,12 @@ class HomePage extends Component {
             productList: [
                 {
                     productName: 'Hammer',
-                    description: 'Itsa hammer',
+                    description: 'Its a hammer',
                     price: 12.3,
                 },
                 {
                     productName: 'Nail',
-                    description: 'Itsa nail',
+                    description: 'Its a nail',
                     price: 0.12,
                 }
             ]
@@ -35,8 +35,13 @@ class HomePage extends Component {
     }
     handleItemCurrentlyOnSaleChange = (event) => {
         const itemCurrentlyOnSale = event.target.value;
-        this.setState({ itemCurrentlyOnSale });
-    };
+        this.setState({ itemCurrentlyOnSale })
+    }
+    addNewProductToProductList = (newProduct) => {
+        const productList = [...this.state.productList]
+        productList.push(newProduct)
+        this.setState({productList})
+    }
     render() {
         return (
             <div>
@@ -57,7 +62,8 @@ class HomePage extends Component {
                             </div>
                             : null
                     }
-                    <AdminView productList={this.state.productList}/>
+                    <AdminView productList={this.state.productList}
+                    addNewProductToProductList={this.addNewProductToProductList}/>
                 </div>
             </div>
         )
