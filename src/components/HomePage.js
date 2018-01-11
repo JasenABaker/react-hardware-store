@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import AdminView from './AdminView'
 
 class HomePage extends Component {
     ///first method stylistcally inside your class
@@ -8,7 +9,19 @@ class HomePage extends Component {
 
         this.state = {
             itemCurrentlyOnSale: 'A Hammer',
-            editSaleItem: true
+            editSaleItem: true,
+            productList: [
+                {
+                    productName: 'Hammer',
+                    description: 'Itsa hammer',
+                    price: 12.3,
+                },
+                {
+                    productName: 'Nail',
+                    description: 'Itsa nail',
+                    price: 0.12,
+                }
+            ]
         };
     }
     ///javaScript does not have a concept of class variables
@@ -44,6 +57,7 @@ class HomePage extends Component {
                             </div>
                             : null
                     }
+                    <AdminView productList={this.state.productList}/>
                 </div>
             </div>
         )
