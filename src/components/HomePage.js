@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import AdminView from './AdminView'
-import ShopView from './ShopView';
+import ShopView from './ShopView'
+import CartView from './CartView'
 
 class HomePage extends Component {
     ///first method stylistcally inside your class
@@ -39,7 +40,7 @@ class HomePage extends Component {
     }
     toggleAdmin = () => {
         const Admin = !this.state.adminView
-        this.setState({ Admin })
+        this.setState({ adminView: Admin })
     }
     handleItemCurrentlyOnSaleChange = (event) => {
         const itemCurrentlyOnSale = event.target.value;
@@ -56,27 +57,28 @@ class HomePage extends Component {
         productList.splice(index, 1)
         this.setState({ productList })
     }
-    addProductToCart = (index)=>{
-        const product = {...this.state.productList[index]}
-        const cartList = {...this.state.cartList}
+    addProductToCart = (index) => {
+        const product = { ...this.state.productList[index] }
+        const cartList = { ...this.state.cartList }
 
         cartList.push(product)
 
-        this.setState({cartList})
+        this.setState({ cartList })
     }
-    removeProductFromCart = (index) =>{
-        const cartList = {...this.state.cartList}
+    removeProductFromCart = (index) => {
+        const cartList = { ...this.state.cartList }
 
         cartList.splice(index, 1)
 
-        this.setState({cartList})
-        }
+        this.setState({ cartList })
+    }
     render() {
         const adminView =
             <AdminView productList={this.state.productList}
                 addNewProductToProductList={this.addNewProductToProductList}
                 deleteProductFromProductList={this.deleteProductFromProductList} />
-        const shopView = <ShopView productList={this.state.productList} />
+        const shopView = <ShopView productList={this.state.productList}
+            addProductToCart={this.addProductToCart} />
         return (
             <div>
                 <h1>My Hardware Store</h1>
@@ -93,23 +95,28 @@ class HomePage extends Component {
                                 </div>
                                 : null
                         }
-                        </div>
-                        <div>
+                    </div>
+                    <div>
                         <button onClick={this.toggleEditSaleItem}>
-                        {this.state.editSaleItem ? 'Hide' : 'Edit Sale Item'}
+                            {this.state.editSaleItem ? 'Hide' : 'Edit Sale Item'}
                         </button>
-                        </div>
-                        <div>
-                            <button onClick={this.toggleAdmin}>
-                            {this.state.adminView ? 'Show Admin View' : 'Show Shop View'}
-                    </button>
+                    </div>
+                    <div>
+                        <button onClick={this.toggleAdmin}>
+                            {this.state.adminView ? 'Show Shop View' : 'Show Admin View'}
+                        </button>
                     </div>
                     <div>
                         {this.state.adminView ? adminView : shopView}
-                    </div>
+
+                        <CartView
+                            productList={this.state.cartList}
+                            removeProductFromCart={this.removeProductFromCart} />
+
                     </div>
                 </div>
-                )
+            </div>
+        )
     }/// Use null to show nothing
 }
 
